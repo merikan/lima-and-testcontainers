@@ -1,0 +1,11 @@
+services:
+  mariadb:
+    image: mariadb:12.3.3
+    environment:
+      MARIADB_ROOT_PASSWORD: test
+      MARIADB_DATABASE: test
+      MARIADB_USER: test
+      MARIADB_PASSWORD: test
+    command: ["--character-set-server=utf8mb4", "--collation-server=utf8mb4_unicode_ci", "--max-connections=50"]
+    ports:
+      - "3306"
