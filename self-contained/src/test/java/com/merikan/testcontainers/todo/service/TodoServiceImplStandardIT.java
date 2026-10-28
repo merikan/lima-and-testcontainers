@@ -3,7 +3,6 @@ package com.merikan.testcontainers.todo.service;
 import com.merikan.testcontainers.todo.model.Todo;
 import com.merikan.testcontainers.todo.repository.TodoRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
@@ -25,7 +24,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static com.merikan.testcontainers.todo.test.TestRandom.newEasyRandom;
+import static com.merikan.testcontainers.todo.test.TestRandom.newTodo;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -34,7 +33,6 @@ import static com.merikan.testcontainers.todo.test.TestRandom.newEasyRandom;
 @Disabled("This test is disabled since we are using abstract base class instead. See this as an example of how-to")
 public class TodoServiceImplStandardIT {
     private static final DockerImageName MARIADB_IMAGE = DockerImageName.parse("mariadb:12.3.3");
-    private final EasyRandom random = newEasyRandom();
 
     @Container
     private static final MariaDBContainer mariadb = new MariaDBContainer(MARIADB_IMAGE);
@@ -54,7 +52,7 @@ public class TodoServiceImplStandardIT {
     class Save {
         @Test
         public void shouldSave() {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             Todo persisted = uut.save(todo);
             assertThat(persisted).isEqualToIgnoringGivenFields(todo, "id");
             assertThat(repository.findById(persisted.getId())).isNotEmpty();
@@ -63,7 +61,7 @@ public class TodoServiceImplStandardIT {
 
         @Test
         public void shouldThrowExceptionWhenTitleIsEmpty() {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             todo.setTitle("");
             ConstraintViolationException e = assertThrows(ConstraintViolationException.class, () -> {
                 uut.save(todo);

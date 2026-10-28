@@ -17,6 +17,7 @@
   <properties>
     <java.version>25</java.version>
     <rest-assured.version>6.3.0</rest-assured.version>
+    <instancio.version>6.1.0</instancio.version>
   </properties>
 
   <dependencies>
@@ -70,9 +71,9 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.jeasy</groupId>
-      <artifactId>easy-random-core</artifactId>
-      <version>5.0.0</version>
+      <groupId>org.instancio</groupId>
+      <artifactId>instancio-core</artifactId>
+      <version>${instancio.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>

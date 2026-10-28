@@ -7,7 +7,6 @@ import com.merikan.testcontainers.todo.test.AbstractIntegrationTest;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,13 +20,13 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static io.restassured.RestAssured.given;
-import static com.merikan.testcontainers.todo.test.TestRandom.newEasyRandom;
+import static com.merikan.testcontainers.todo.test.TestRandom.newTodo;
+import static com.merikan.testcontainers.todo.test.TestRandom.newTodos;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TodoControllerIT extends AbstractIntegrationTest {
 
     private static String basePath;
-    private final EasyRandom random = newEasyRandom();
     @LocalServerPort
     protected int localPort;
 
@@ -67,7 +66,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
     class Create {
         @Test
         public void shouldCreateAndReturn201() throws Exception {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             //@formatter:off
             String json =
                 given()
@@ -87,7 +86,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
 
         @Test
         public void shouldIgnoreClientSuppliedId() throws Exception {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             todo.setId(666L);
             //@formatter:off
             String json =
@@ -107,7 +106,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
 
         @Test
         public void shouldFailWhenInvalid() throws Exception {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             todo.setTitle(null);
             //@formatter:off
             given()
@@ -125,7 +124,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
     class Delete {
         @Test
         public void delete_shouldDelete() {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             Todo persisted = repository.save(todo);
             //@formatter:off
             given()
@@ -178,7 +177,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
 
         @Test
         public void shouldReturnOne() {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             repository.save(todo);
             //@formatter:off
             List<Todo> result =
@@ -198,7 +197,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
         @Test
         public void shouldReturnAll() {
             int numbers = 42;
-            Stream<Todo> todos = random.objects(Todo.class, numbers);
+            Stream<Todo> todos = newTodos(numbers);
             todos.forEach(todo -> repository.save(todo));
             //@formatter:off
             List<Todo> result =
@@ -220,7 +219,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
     class Get {
         @Test
         public void shouldReturnFound() {
-            Todo todo = random.nextObject(Todo.class);
+            Todo todo = newTodo();
             Todo persisted = repository.save(todo);
             //@formatter:off
         Todo result =

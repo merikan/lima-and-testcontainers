@@ -1,22 +1,30 @@
 package com.merikan.testcontainers.todo.test;
 
 import com.merikan.testcontainers.todo.model.Todo;
-import org.jeasy.random.EasyRandom;
-import org.jeasy.random.EasyRandomParameters;
+import org.instancio.Instancio;
+import org.instancio.Model;
 
-import static org.jeasy.random.FieldPredicates.inClass;
-import static org.jeasy.random.FieldPredicates.named;
+import java.util.stream.Stream;
+
+import static org.instancio.Select.field;
 
 /**
- * {@code EasyRandom} that leaves {@code Todo.id} null, so saved todos are inserted
+ * Random {@code Todo}s with {@code id} left null, so saved todos are inserted
  * and the database generates the id.
  */
 public final class TestRandom {
+    private static final Model<Todo> TODO = Instancio.of(Todo.class)
+        .ignore(field(Todo::getId))
+        .toModel();
+
     private TestRandom() {
     }
 
-    public static EasyRandom newEasyRandom() {
-        return new EasyRandom(new EasyRandomParameters()
-            .excludeField(named("id").and(inClass(Todo.class))));
+    public static Todo newTodo() {
+        return Instancio.create(TODO);
+    }
+
+    public static Stream<Todo> newTodos(int count) {
+        return Instancio.stream(TODO).limit(count);
     }
 }
