@@ -12,6 +12,10 @@ Three ways to configure containers with Testcontainers, named by where the confi
 - [project-mounted](project-mounted): the container is defined in test code, with its configuration in [src/test/resources/mariadb-conf/my.cnf](project-mounted/src/test/resources/mariadb-conf/my.cnf).
 - [compose](compose): the container is defined in [src/test/resources/compose.yml](compose/src/test/resources/compose.yml) and started through `ComposeContainer`.
 
+The application itself can also run in a container:
+
+- [multi-arch](multi-arch): the application is built into a multi-architecture image (`linux/amd64`, `linux/arm64`) with docker-maven-plugin and Buildx, and tested as a container.
+
 ## How to run the code
 
 You need Java 25 and a running Docker environment, such as Lima.
@@ -23,13 +27,19 @@ $ git clone https://github.com/merikan/lima-and-testcontainers.git
 $ cd lima-and-testcontainers
 ```
 
-2. Run the unit and integration tests for all projects
+2. Run the unit and integration tests for all projects except `multi-arch`
 
 ```
 $ ./mvnw verify
 ```
 
-or for one project: `self-contained`, `project-mounted` or `compose`
+Building the multi-arch image is slow, so `multi-arch` is only included with the `multi-arch` profile
+
+```
+$ ./mvnw verify -Pmulti-arch
+```
+
+or for one project: `self-contained`, `project-mounted`, `compose` or `multi-arch`
 
 ```
 $ cd self-contained

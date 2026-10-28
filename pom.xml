@@ -15,5 +15,14 @@
     <module>compose</module>
   </modules>
 
+  <profiles>
+    <!-- Building the multi-arch image is slow, so it is opt-in: ./mvnw verify -Pmulti-arch -->
+    <profile>
+      <id>multi-arch</id>
+      <modules>
+        <module>multi-arch</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>
