@@ -123,6 +123,16 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <!-- the Dockerfile builds the image, it doesn't belong in the jar -->
+          <excludes>
+            <exclude>docker/**</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>io.fabric8</groupId>
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker-maven-plugin.version}</version>
@@ -131,7 +141,7 @@
             <image>
               <name>${app.image}</name>
               <build>
-                <contextDir>${project.basedir}/src/main/docker</contextDir>
+                <contextDir>${project.basedir}/src/main/resources/docker</contextDir>
                 <assembly>
                   <descriptorRef>artifact</descriptorRef>
                 </assembly>
