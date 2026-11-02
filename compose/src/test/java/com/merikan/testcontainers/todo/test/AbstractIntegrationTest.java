@@ -5,7 +5,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.ComposeContainer;
-import org.testcontainers.utility.DockerImageName;
 
 import java.io.File;
 
@@ -14,13 +13,12 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @ActiveProfiles("integrationtest")
 public abstract class AbstractIntegrationTest {
-    private static final DockerImageName DOCKER_IMAGE = DockerImageName.parse("docker:25.0.5");
     private static final String MARIADB_SERVICE = "mariadb-1";
     private static final int MARIADB_PORT = 3306;
     private static final ComposeContainer environment;
 
     static {
-        environment = new ComposeContainer(DOCKER_IMAGE, new File("src/test/resources/compose.yml"))
+        environment = new ComposeContainer(new File("src/test/resources/compose.yml"))
             .withExposedService(MARIADB_SERVICE, MARIADB_PORT);
         environment.start();
     }
