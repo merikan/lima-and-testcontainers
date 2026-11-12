@@ -54,7 +54,7 @@ public class TodoServiceImplStandardIT {
         public void shouldSave() {
             Todo todo = newTodo();
             Todo persisted = uut.save(todo);
-            assertThat(persisted).isEqualToIgnoringGivenFields(todo, "id");
+            assertThat(persisted).usingRecursiveComparison().ignoringFields("id").isEqualTo(todo);
             assertThat(repository.findById(persisted.getId())).isNotEmpty();
 
         }

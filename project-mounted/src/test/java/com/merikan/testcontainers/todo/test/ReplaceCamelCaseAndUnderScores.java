@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * {@code DisplayNameGenerator} that replaces underscores with spaces.
@@ -23,12 +24,12 @@ public  class ReplaceCamelCaseAndUnderScores extends DisplayNameGenerator.Standa
     }
 
     @Override
-    public String generateDisplayNameForNestedClass(Class<?> nestedClass) {
-        return replace(super.generateDisplayNameForNestedClass(nestedClass));
+    public String generateDisplayNameForNestedClass(List<Class<?>> enclosingInstanceTypes, Class<?> nestedClass) {
+        return replace(super.generateDisplayNameForNestedClass(enclosingInstanceTypes, nestedClass));
     }
 
     @Override
-    public String generateDisplayNameForMethod(Class<?> testClass, Method testMethod) {
+    public String generateDisplayNameForMethod(List<Class<?>> enclosingInstanceTypes, Class<?> testClass, Method testMethod) {
         String displayName = replace(testMethod.getName());
         if (hasParameters(testMethod)) {
             displayName += ' ' + DisplayNameGenerator.parameterTypesAsString(testMethod);

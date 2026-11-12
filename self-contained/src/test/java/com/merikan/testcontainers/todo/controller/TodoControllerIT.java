@@ -80,8 +80,8 @@ public class TodoControllerIT extends AbstractIntegrationTest {
             //@formatter:on
             Todo response = objectMapper.readValue(json, Todo.class);
             assertThat(response)
-                .usingComparatorForFields((a, b) -> 0, "id")
-                .isEqualToComparingFieldByField(todo);
+                .usingRecursiveComparison().ignoringFields("id")
+                .isEqualTo(todo);
         }
 
         @Test
@@ -233,7 +233,7 @@ public class TodoControllerIT extends AbstractIntegrationTest {
         //@formatter:on
             assertThat(result).isNotNull();
             assertThat(result)
-                .isEqualToComparingFieldByField(persisted);
+                .usingRecursiveComparison().isEqualTo(persisted);
 
         }
 
