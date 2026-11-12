@@ -138,6 +138,7 @@
         <artifactId>docker-maven-plugin</artifactId>
         <version>${docker-maven-plugin.version}</version>
         <configuration>
+          <certPath>/nonexistent</certPath>
           <images>
             <image>
               <name>${app.image}</name>
@@ -160,7 +161,7 @@
         <executions>
           <execution>
             <id>build-image</id>
-            <phase>pre-integration-test</phase>
+            <phase>package</phase>
             <goals>
               <goal>build</goal>
             </goals>
@@ -172,9 +173,6 @@
         <artifactId>maven-failsafe-plugin</artifactId>
         <configuration>
           <classesDirectory>${project.build.outputDirectory}</classesDirectory>
-          <systemPropertyVariables>
-            <app.image>${app.image}</app.image>
-          </systemPropertyVariables>
         </configuration>
         <executions>
           <execution>

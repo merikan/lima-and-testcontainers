@@ -14,7 +14,8 @@ Three ways to configure containers with Testcontainers, named by where the confi
 
 The application itself can also run in a container:
 
-- [multi-arch](multi-arch): the application is built into a multi-architecture image (`linux/amd64`, `linux/arm64`) with docker-maven-plugin and Buildx, and tested as a container.
+- [multi-arch](multi-arch): the application is built into a multi-architecture image (`linux/amd64`, `linux/arm64`) with docker-maven-plugin and Buildx. The tests run against the application on the JVM.
+- [multi-arch-image-test](multi-arch-image-test): same as `multi-arch`, but the image is also tested as a container.
 
 ## How to run the code
 
@@ -27,19 +28,19 @@ $ git clone https://github.com/merikan/lima-and-testcontainers.git
 $ cd lima-and-testcontainers
 ```
 
-2. Run the unit and integration tests for all projects except `multi-arch`
+2. Run the unit and integration tests for all projects except `multi-arch` and `multi-arch-image-test`
 
 ```
 $ ./mvnw verify
 ```
 
-Building the multi-arch image is slow, so `multi-arch` is only included with the `multi-arch` profile
+Building the multi-arch images is slow, so `multi-arch` and `multi-arch-image-test` are only included with the `multi-arch` profile
 
 ```
 $ ./mvnw verify -Pmulti-arch
 ```
 
-or for one project: `self-contained`, `project-mounted`, `compose` or `multi-arch`
+or for one project: `self-contained`, `project-mounted`, `compose`, `multi-arch` or `multi-arch-image-test`
 
 ```
 $ cd self-contained

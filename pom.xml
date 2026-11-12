@@ -16,11 +16,12 @@
   </modules>
 
   <profiles>
-    <!-- Building the multi-arch image is slow, so it is opt-in: ./mvnw verify -Pmulti-arch -->
+    <!-- Building the multi-arch images is slow, so it is opt-in: ./mvnw verify -Pmulti-arch -->
     <profile>
       <id>multi-arch</id>
       <modules>
         <module>multi-arch</module>
+        <module>multi-arch-image-test</module>
       </modules>
     </profile>
   </profiles>
