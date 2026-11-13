@@ -1,7 +1,9 @@
 # vim: ft=dockerfile
 
 # Build the jar with Maven in a separate container
-FROM eclipse-temurin:25-jdk AS maven
+# The jar and its extracted layers are the same on every platform, so the build stages
+# run on the build platform and a cross-platform build needs no emulation
+FROM --platform=$BUILDPLATFORM eclipse-temurin:25-jdk AS maven
 WORKDIR /build
 
 COPY mvnw pom.xml ./
@@ -13,7 +15,7 @@ COPY src/ src/
 RUN --mount=type=cache,target=/root/.m2 ./mvnw -B package
 
 # Perform the extraction in a separate builder container
-FROM eclipse-temurin:25-jre AS builder
+FROM --platform=$BUILDPLATFORM eclipse-temurin:25-jre AS builder
 WORKDIR /builder
 
 # Copy the jar file from the maven container and rename it to application.jar

@@ -12,6 +12,12 @@ The [Dockerfile](Dockerfile) builds the application from source in three stages,
 $ docker build -t todo-self-contained .
 ```
 
+The `maven` and `builder` stages use `FROM --platform=$BUILDPLATFORM`, since the jar and its layers are the same on every platform. Only the runtime stage uses the target platform, and it runs nothing, so you can build for another platform without emulation:
+
+```
+$ docker build --platform linux/amd64 -t todo-self-contained .
+```
+
 The application needs a MariaDB database. Pass the connection settings as environment variables:
 
 ```
