@@ -14,6 +14,7 @@ Three ways to configure containers with Testcontainers, named by where the confi
 
 The application itself can also run in a container:
 
+- [self-contained](self-contained): the application is built from source into an image with a multi-stage [Dockerfile](self-contained/Dockerfile).
 - [multi-arch](multi-arch): the application is built into a multi-architecture image (`linux/amd64`, `linux/arm64`) with docker-maven-plugin and Buildx. The tests run against the application on the JVM.
 - [multi-arch-image-test](multi-arch-image-test): same as `multi-arch`, but the image is also tested as a container.
 
