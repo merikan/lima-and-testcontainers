@@ -17,6 +17,7 @@ The application itself can also run in a container:
 - [self-contained](self-contained): the application is built from source into an image with a multi-stage [Dockerfile](self-contained/Dockerfile).
 - [multi-arch](multi-arch): the application is built into a multi-architecture image (`linux/amd64`, `linux/arm64`) with docker-maven-plugin and Buildx. The tests run against the application on the JVM.
 - [multi-arch-image-test](multi-arch-image-test): same as `multi-arch`, but the image is also tested as a container.
+- [buildpacks](buildpacks): same as `multi-arch-image-test`, but the images for `linux/amd64` and `linux/arm64` are built with buildpacks through the Spring Boot Maven plugin. On Lima it needs emulation for the non-native platform and a symlink to the rootless Docker socket in the VM, see [buildpacks](buildpacks/README.md#lima-setup).
 
 ## How to run the code
 
@@ -29,19 +30,19 @@ $ git clone https://github.com/merikan/lima-and-testcontainers.git
 $ cd lima-and-testcontainers
 ```
 
-2. Run the unit and integration tests for all projects except `multi-arch` and `multi-arch-image-test`
+2. Run the unit and integration tests for all projects except `multi-arch`, `multi-arch-image-test` and `buildpacks`
 
 ```
 $ ./mvnw verify
 ```
 
-Building the multi-arch images is slow, so `multi-arch` and `multi-arch-image-test` are only included with the `multi-arch` profile
+Building the multi-arch images is slow, so `multi-arch`, `multi-arch-image-test` and `buildpacks` are only included with the `multi-arch` profile
 
 ```
 $ ./mvnw verify -Pmulti-arch
 ```
 
-or for one project: `self-contained`, `project-mounted`, `compose`, `multi-arch` or `multi-arch-image-test`
+or for one project: `self-contained`, `project-mounted`, `compose`, `multi-arch`, `multi-arch-image-test` or `buildpacks`
 
 ```
 $ cd self-contained

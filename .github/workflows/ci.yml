@@ -27,6 +27,11 @@ jobs:
         java-version: '25'
         distribution: 'temurin'
         cache: maven
+    # buildpacks runs the arm64 builder to build the arm64 image, which needs emulation on the amd64 runner
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v4
+      with:
+        platforms: arm64
     - name: Build with Maven
       run: ./mvnw -B verify -Pmulti-arch --file pom.xml
 

@@ -22,6 +22,7 @@
       <modules>
         <module>multi-arch</module>
         <module>multi-arch-image-test</module>
+        <module>buildpacks</module>
       </modules>
     </profile>
   </profiles>
