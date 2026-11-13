@@ -80,11 +80,6 @@
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>testcontainers</artifactId>
       <scope>test</scope>
@@ -184,15 +179,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>
-            -Djunit.jupiter.displayname.generator.default=com.merikan.testcontainers.todo.test.ReplaceCamelCaseAndUnderScores
-          </argLine>
-        </configuration>
       </plugin>
     </plugins>
   </build>
