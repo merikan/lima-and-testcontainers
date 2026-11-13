@@ -1,7 +1,7 @@
 # Buildpacks
 This is [multi-arch-image-test](../multi-arch-image-test), but the image is built with [Cloud Native Buildpacks](https://buildpacks.io) through the Spring Boot Maven plugin instead of a Dockerfile.
 
-* `spring-boot:build-image-no-fork` runs in the `pre-integration-test` phase with the default Paketo builder. Buildpacks build one platform per run, so there is one execution per platform, each with its own tag: `todo-buildpacks:1.0.0-SNAPSHOT-amd64` and `todo-buildpacks:1.0.0-SNAPSHOT-arm64`.
+* `spring-boot:build-image-no-fork` runs in the `package` phase with the default Paketo builder. Buildpacks build one platform per run, so there is one execution per platform, each with its own tag: `todo-buildpacks:1.0.0-SNAPSHOT-amd64` and `todo-buildpacks:1.0.0-SNAPSHOT-arm64`.
 * The `native-amd64`, `native-x86_64` and `native-arm64` profiles activate on the JVM's `os.arch` and also tag the native image `todo-buildpacks:1.0.0-SNAPSHOT`. The JVM reports `amd64` on Linux and `x86_64` on Intel Macs, so amd64 needs two profiles.
 * [ApplicationImageIT](src/test/java/com/merikan/testcontainers/todo/ApplicationImageIT.java) starts the native image together with MariaDB on a shared network and calls the REST API.
 

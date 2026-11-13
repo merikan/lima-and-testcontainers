@@ -119,7 +119,7 @@
           <!-- buildpacks build one platform per run, so each platform gets its own execution and tag -->
           <execution>
             <id>build-image-amd64</id>
-            <phase>pre-integration-test</phase>
+            <phase>package</phase>
             <goals>
               <goal>build-image-no-fork</goal>
             </goals>
@@ -132,7 +132,7 @@
           </execution>
           <execution>
             <id>build-image-arm64</id>
-            <phase>pre-integration-test</phase>
+            <phase>package</phase>
             <goals>
               <goal>build-image-no-fork</goal>
             </goals>
